@@ -1,0 +1,50 @@
+@page "/"
+
+<div class="d-flex w-100 justify-content-evenly align-items-center mb-3 mt-3">
+    <div class="d-flex align-items-center">
+        Teachers per subject:
+        <input type="number" min="1" @bind="@TeachersPerSubject" style="height: 42px; width: 200px; margin-left: 0.5rem;">
+    </div>
+    <div class="d-flex align-items-center">
+        Subjects per group:
+        <input type="number" min="1" @bind="@SubjectsPerGroup" style="height: 42px; width: 200px; margin-left: 0.5rem;">
+    </div>
+    <div class="d-flex align-items-center">
+        Lessons per day:
+        <input type="number" min="1" @bind="@LessonsPerDay" style="height: 42px; width: 200px; margin-left: 0.5rem;">
+    </div>
+    <button style="height: 42px; width: 200px" @onclick="Solve">Solve</button>
+
+</div>
+<div class="days">
+    @foreach (var day in Days)
+    {
+        <div class="day">
+            <div class="schedule-header">
+                @day
+            </div>
+            <div class="groups">
+                @foreach (var (group, schedulePerGroup) in ScheduleList)
+                {
+                    var listOfClasses = schedulePerGroup[day];
+                    <div class="group">
+                        <div class="schedule-header">
+                            @group.Name
+                        </div>
+                        <div class="schedule">
+                            @foreach (var _class in listOfClasses)
+                            {
+                                <div class="schedule-row">
+                                    <span>@_class.Room.Number</span> 
+                                    <span>@_class.Subject.Name</span> 
+                                    <span>@_class.Teacher.Name</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>
